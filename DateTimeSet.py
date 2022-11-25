@@ -8,6 +8,19 @@ def datetime_set(date):
     # 正規表現パターンを定義　yyyy*mm*dd yyyy*m*d　等を想定。
     pattern = re.compile(r"(\d{4}).(\d{1,2}).(\d{1,2})")
 
+    # "20220101"のように数字八桁で記述される場合。
+    if bool(re.fullmatch(r"\d{8}", date)):
+        if date[4] == "0":
+            month = date[5]
+        else:
+            month = date[4:6]
+        if date[6] == "0":
+            day = date[7]
+        else:
+            day = date[6:8]
+        date = datetime.date(int(date[0:4]), int(month), int(day))
+        return date
+
     # patternで定義したパターンと同じ形式になっている場合。
     if bool(pattern.search(date)):
         pattern = pattern.search(date)
@@ -22,19 +35,6 @@ def datetime_set(date):
             day = pattern_set[2][1]
             pattern_set[2] = day
         date = datetime.date(int(pattern_set[0]), int(pattern_set[1]), int(pattern_set[2]))
-        return date
-
-    # "20220101"のように数字八桁で記述される場合。
-    if len(date) == 8:
-        if date[4] == "0":
-            month = date[5]
-        else:
-            month = date[4:6]
-        if date[6] == "0":
-            day = date[7]
-        else:
-            day = date[6:8]
-        date = datetime.date(int(date[0:4]), int(month), int(day))
         return date
 
     # 変換の定義がされていない形式が入力されたとき、エラーメッセージを表示して処理を終了する。
