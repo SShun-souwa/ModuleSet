@@ -40,3 +40,11 @@ def datetime_set(date):
     # 変換の定義がされていない形式が入力されたとき、エラーメッセージを表示して処理を終了する。
     print("the format of inputted date not define。please add format in DateTimeSet")
     exit()
+
+
+# 引数にデータフレーム、日付の入ったカラムの名前を渡し、対象カラムの日付をdatetime型に変換する
+def change_dataframe_day(dataframe, column_name):
+    day_list = dataframe[column_name].tolist()
+    for i in range(0, len(day_list)):
+        day_list[i] = datetime_set(day_list[i])
+    dataframe[column_name] = day_list
