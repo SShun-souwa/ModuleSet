@@ -48,3 +48,4 @@ def change_dataframe_day(dataframe, column_name):
     for i in range(0, len(day_list)):
         day_list[i] = datetime_set(day_list[i])
     dataframe[column_name] = day_list
+    return dataframe
